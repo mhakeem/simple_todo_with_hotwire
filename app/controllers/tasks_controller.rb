@@ -12,16 +12,11 @@ class TasksController < ApplicationController
 
     if @task.save
       respond_to do |format|
-        format.turbo_stream {
-          render turbo_stream: [
-            turbo_stream.prepend("tasks", partial: "task", locals: { task: @task }),
-            turbo_stream.replace("task_form", partial: "form", locals: { task: Task.new })
-          ]
-        }
+        format.turbo_stream
         format.html { redirect_to tasks_path }
       end
     else
-      render :index
+      render :index, status: :unprocessable_entity
     end
   end
 
