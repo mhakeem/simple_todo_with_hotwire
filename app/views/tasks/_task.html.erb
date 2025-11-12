@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "task_#{task.id}" do %>
+  <div class="p-4 bg-white rounded shadow flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <%= form_with(model: task, method: :patch) do |form| %>
+        <%= form.check_box :completed, 
+          onchange: "this.form.requestSubmit()",
+          class: "w-5 h-5" %>
+      <% end %>
+      
+      <span class="<%= 'line-through text-gray-400' if task.completed %>">
+        <%= task.content %>
+      </span>
+    </div>
+  
+    <%= button_to "Delete", task_path(task), 
+      method: :delete,
+      class: "text-red-500 hover:text-red-700" %>
+  </div>
+<% end %>
