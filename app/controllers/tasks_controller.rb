@@ -39,6 +39,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def stats
+    sleep 2  # Simulate slow query
+
+    @total = Task.count
+    @completed = Task.where(completed: true).count
+    @pending = @total - @completed
+  end
+
   private
 
   def task_params

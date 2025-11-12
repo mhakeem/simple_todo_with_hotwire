@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "stats" do %>
+  <div class="p-4 bg-blue-50 rounded mb-6 flex gap-6">
+    <div>
+      <div class="text-2xl font-bold"><%= @total %></div>
+      <div class="text-sm text-gray-600">Total Tasks</div>
+    </div>
+    <div>
+      <div class="text-2xl font-bold text-green-600"><%= @completed %></div>
+      <div class="text-sm text-gray-600">Completed</div>
+    </div>
+    <div>
+      <div class="text-2xl font-bold text-orange-600"><%= @pending %></div>
+      <div class="text-sm text-gray-600">Pending</div>
+    </div>
+  </div>
+<% end %>

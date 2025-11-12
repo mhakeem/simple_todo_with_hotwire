@@ -1,6 +1,12 @@
 <div class="w-full">
   <h1 class="text-3xl font-bold mb-6">My Tasks</h1>
 
+  <%= turbo_frame_tag "stats", src: stats_tasks_path, loading: :lazy do %>
+    <div class="p-4 bg-gray-100 rounded mb-6">
+      Loading statistics...
+    </div>
+  <% end %>
+
   <%= turbo_frame_tag "task_form" do %>
     <%= render "form", task: @task %>
   <% end %>
