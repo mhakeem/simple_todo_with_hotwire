@@ -4,8 +4,6 @@
   <%= render "form", task: @task %>
 
   <div class="space-y-2">
-    <% @tasks.each do |task| %>
-      <%= render "task", task: task %>
-    <% end %>
+    <%= render @tasks %>
   </div>
 </div>
