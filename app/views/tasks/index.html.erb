@@ -1,9 +1,11 @@
 <div class="w-full">
   <h1 class="text-3xl font-bold mb-6">My Tasks</h1>
 
-  <%= render "form", task: @task %>
+  <%= turbo_frame_tag "task_form" do %>
+    <%= render "form", task: @task %>
+  <% end %>
 
-  <div class="space-y-2">
+  <div id="tasks" class="space-y-2">
     <%= render @tasks %>
   </div>
 </div>
