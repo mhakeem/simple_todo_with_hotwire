@@ -4,9 +4,12 @@ import { Controller } from "@hotwired/stimulus"
 const THREE_SECONDS = 3000
 
 export default class extends Controller {
+  static values = {
+    delay: { type: Number, default: THREE_SECONDS }
+  }
   
   connect() {
-    setTimeout(() => { this.dismiss() }, THREE_SECONDS)
+    setTimeout(() => { this.dismiss() }, this.delayValue)
   }
 
   dismiss() {
