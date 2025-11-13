@@ -11,9 +11,10 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
+      notice = "Task created_successfully!"
       respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to tasks_path }
+        format.turbo_stream { flash.now[:notice] = notice }
+        format.html { redirect_to tasks_path, notice: }
       end
     else
       render :index, status: :unprocessable_entity
