@@ -6,10 +6,12 @@ const THREE_SECONDS = 3000
 export default class extends Controller {
   
   connect() {
-    setTimeout(() => {this.dismiss()}, THREE_SECONDS)
+    setTimeout(() => { this.dismiss() }, THREE_SECONDS)
   }
 
   dismiss() {
-    this.element.remove()
+    this.element.classList.add('transition', 'opacity-0')
+
+    setTimeout(() => { this.element.remove() }, 300)
   }
 }
