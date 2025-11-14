@@ -18,4 +18,11 @@ export default class extends Controller {
     this.formTarget.classList.add('hidden')
     this.deleteButtonTarget.classList.remove('hidden')
   }
+
+  handleKeydown(event) {
+    if (event.key === "Escape") {
+      event.preventDefault()
+      this.cancel()
+    }
+  }
 }
