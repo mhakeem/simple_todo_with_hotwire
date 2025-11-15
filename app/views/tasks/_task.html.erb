@@ -1,50 +1,67 @@
 <%= turbo_frame_tag "task_#{task.id}" do %>
-  <div
-    data-controller="inline-edit"
-    class="p-4 bg-white rounded shadow flex items-center justify-between"
-  >
-    <!-- Display Mode -->
-    <div
-      data-inline-edit-target="display"
-      class="flex items-center gap-3 flex-1"
-    >
-      <%= form_with(model: task, method: :patch) do |form| %>
-        <%= form.check_box :completed, 
-            onchange: "this.form.requestSubmit()",
-            class: "w-5 h-5" %>
-      <% end %>
-
-      <span
-        data-action="click->inline-edit#edit"
-        class="<%= 'line-through text-gray-400' if task.completed %> cursor-pointer"
+  <div data-controller="inline-edit" class="p-4 bg-white rounded shadow">
+    <div class="flex items-center justify-between mb-2">
+      <!-- Display Mode for CONTENT (Stimulus) -->
+      <div
+        data-inline-edit-target="display"
+        class="flex items-center gap-3 flex-1"
       >
-        <%= task.content %>
-      </span>
+        <%= form_with(model: task, method: :patch) do |form| %>
+          <%= form.check_box :completed, 
+              onchange: "this.form.requestSubmit()",
+              class: "w-5 h-5" %>
+        <% end %>
+
+        <span
+          data-action="click->inline-edit#edit"
+          class="<%= 'line-through text-gray-400' if task.completed %> cursor-pointer"
+        >
+          <%= task.content %>
+        </span>
+      </div>
+
+      <!-- Edit Mode for CONTENT (Stimulus) -->
+      <div data-inline-edit-target="form" class="hidden flex-1 flex gap-2">
+        <%= form_with(model: task, method: :patch, class: "flex gap-2 flex-1") do |form| %>
+          <%= form.text_field :content, 
+              data: { 
+                inline_edit_target: "input",
+                action: "keydown->inline-edit#handleKeydown"
+              },
+              class: "flex-1 px-4 py-2 border rounded" %>
+          <%= form.submit "Save", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+          <button
+            type="button"
+            data-action="click->inline-edit#cancel"
+            class="px-4 py-2 bg-gray-300 rounded"
+          >
+            Cancel
+          </button>
+        <% end %>
+      </div>
+
+      <%= button_to "Delete", task_path(task), 
+          method: :delete,
+          data: { inline_edit_target: "deleteButton" },
+          class: "text-red-500 hover:text-red-700" %>
     </div>
 
-    <!-- Edit Mode (hidden by default) -->
-    <div data-inline-edit-target="form" class="hidden flex-1 flex gap-2">
-      <%= form_with(model: task, method: :patch, class: "flex gap-2 flex-1") do |form| %>
-        <%= form.text_field :content, 
-            data: { 
-              inline_edit_target: "input", 
-              action: "keydown->inline-edit#handleKeydown" 
-            },
-            class: "flex-1 px-4 py-2 border rounded" %>
-        <%= form.submit "Save", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
-        <button
-          type="button"
-          data-action="click->inline-edit#cancel"
-          class="px-4 py-2 bg-gray-300 rounded"
-        >
-          Cancel
-        </button>
+    <!-- Description section (Turbo Frame pattern) -->
+    <div class="mt-2 pl-8">
+      <%= turbo_frame_tag "task_#{task.id}_description" do %>
+        <div class="text-sm text-gray-600">
+          <% if task.description.present? %>
+            <%= simple_format(task.description) %>
+            <%= link_to "Edit description", 
+                edit_task_path(task, edit_type: :description),
+                class: "text-blue-500 text-xs hover:underline" %>
+          <% else %>
+            <%= link_to "+ Add description", 
+                edit_task_path(task, edit_type: :description),
+                class: "text-blue-500 text-xs hover:underline" %>
+          <% end %>
+        </div>
       <% end %>
     </div>
-
-    <%= button_to "Delete", task_path(task), 
-        method: :delete,
-        data: { inline_edit_target: "deleteButton" },
-        class: "text-red-500 hover:text-red-700" %>
   </div>
 <% end %>

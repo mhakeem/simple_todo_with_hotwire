@@ -21,13 +21,27 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    @task = Task.find(params[:id])
+    @edit_type = params[:edit_type]
+  end
+
   def update
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      redirect_to tasks_path
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "task_#{@task.id}",
+            partial: "task",
+            locals: { task: @task }
+          )
+        end
+        format.html { redirect_to tasks_path }
+      end
     else
-      redirect_to tasks_path, alert: "Error updating task"
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -51,6 +65,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:content, :completed)
+    params.require(:task).permit(:content, :completed, :description)
   end
 end

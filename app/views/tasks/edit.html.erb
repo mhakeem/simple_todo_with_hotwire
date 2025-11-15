@@ -1,0 +1,29 @@
+<% if @edit_type == "description" %>
+  <%# This renders inside the description turbo frame %>
+  <%= turbo_frame_tag "task_#{@task.id}_description" do %>
+    <%= form_with(model: @task, class: "space-y-2") do |form| %>
+      <%= form.text_area :description, 
+          rows: 3,
+          placeholder: "Add a description...",
+          autofocus: true,
+          class: "w-full px-3 py-2 border rounded text-sm" %>
+      <div class="flex gap-2">
+        <%= form.submit "Save", class: "px-3 py-1 bg-blue-500 text-white rounded text-sm" %>
+        <%= link_to "Cancel", 
+            tasks_path,
+            class: "px-3 py-1 bg-gray-300 rounded text-sm inline-block" %>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <%# Fallback for editing full task (if needed) %>
+  <%= turbo_frame_tag "task_#{@task.id}" do %>
+    <div class="p-4 bg-white rounded shadow">
+      <%= form_with(model: @task) do |form| %>
+        <%= form.text_field :content, class: "w-full px-4 py-2 border rounded" %>
+        <%= form.submit "Save", class: "mt-2 px-4 py-2 bg-blue-500 text-white rounded" %>
+        <%= link_to "Cancel", tasks_path, class: "mt-2 px-4 py-2 bg-gray-300 rounded inline-block" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
