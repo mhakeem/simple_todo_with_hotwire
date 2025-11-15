@@ -1,5 +1,10 @@
 <%= turbo_frame_tag "task_#{task.id}" do %>
-  <div data-controller="inline-edit" class="p-4 bg-white rounded shadow">
+  <div
+    data-controller="inline-edit"
+    data-search-target="task"
+    data-search-content-value="<%= task.content.downcase %>"
+    class="p-4 bg-white rounded shadow"
+  >
     <div class="flex items-center justify-between mb-2">
       <!-- Display Mode for CONTENT (Stimulus) -->
       <div
@@ -21,7 +26,7 @@
       </div>
 
       <!-- Edit Mode for CONTENT (Stimulus) -->
-      <div data-inline-edit-target="form" class="hidden flex-1 flex gap-2">
+      <div data-inline-edit-target="form" class="hidden flex-1 gap-2">
         <%= form_with(model: task, method: :patch, class: "flex gap-2 flex-1") do |form| %>
           <%= form.text_field :content, 
               data: { 

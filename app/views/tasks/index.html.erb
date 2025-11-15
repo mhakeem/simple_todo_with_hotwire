@@ -11,7 +11,19 @@
     <%= render "form", task: @task %>
   <% end %>
 
-  <div id="tasks" class="space-y-2">
-    <%= render @tasks %>
+  <!-- Search Box -->
+  <div data-controller="search" class="mb-4">
+    <input
+      type="text"
+      autocomplete="on"
+      placeholder="Search tasks..."
+      data-search-target="input"
+      data-action="input->search#filter"
+      class="w-full px-4 py-2 boarder rounded"
+    >
+
+    <div id="tasks" class="space-y-2" data-search-target="container">
+      <%= render @tasks %>
+    </div>
   </div>
 </div>
