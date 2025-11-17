@@ -58,7 +58,7 @@ class TasksController < ApplicationController
     sleep 2  # Simulate slow query
 
     @total = Task.count
-    @completed = Task.where(completed: true).count
+    @completed = Task.where(status: :done).count
     @pending = @total - @completed
   end
 
@@ -73,6 +73,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:content, :completed, :description, :position)
+    params.require(:task).permit(:content, :status, :description, :position)
   end
 end

@@ -1,6 +1,8 @@
 class Task < ApplicationRecord
   validates :content, presence: true
 
+  enum :status, { todo: 0, in_progress: 1, done: 2 }
+
   default_scope { order(position: :asc) }
 
   before_create :set_position

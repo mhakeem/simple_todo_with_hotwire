@@ -12,14 +12,17 @@
         class="flex items-center gap-3 flex-1"
       >
         <%= form_with(model: task, method: :patch) do |form| %>
-          <%= form.check_box :completed, 
-              onchange: "this.form.requestSubmit()",
-              class: "w-5 h-5" %>
+          <%= form.check_box :status,
+                             { onchange: "this.form.requestSubmit()",
+                               class: "w-5 h-5" },
+                             "done",
+                             "todo"
+          %>
         <% end %>
 
         <span
           data-action="click->inline-edit#edit"
-          class="<%= 'line-through text-gray-400' if task.completed %> cursor-pointer"
+          class="<%= 'line-through text-gray-400' if task.done? %> cursor-pointer"
         >
           <%= task.content %>
         </span>
