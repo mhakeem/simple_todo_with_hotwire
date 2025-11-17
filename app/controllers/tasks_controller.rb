@@ -58,8 +58,8 @@ class TasksController < ApplicationController
     sleep 2  # Simulate slow query
 
     @total = Task.count
-    @completed = Task.where(status: :done).count
-    @pending = @total - @completed
+    @completed = Task.done.count
+    @pending = Task.todo.count + Task.in_progress.count
   end
 
   def reorder
