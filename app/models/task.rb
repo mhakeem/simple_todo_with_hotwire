@@ -6,11 +6,21 @@ class Task < ApplicationRecord
   before_create :set_position
 
   def self.reorder_by_ids(ordered_ids)
-    transaction do
-      ordered_ids.each_with_index do |id, index|
-        where(id: id).update_all(position: index + 1)
-      end
-    end
+    # Sanitize IDs
+    sanitized_ids = ordered_ids.map { |id| connection.quote(id) }
+
+    # Build CASE statement
+    case_statement = ordered_ids.each_with_index.map do |id, index|
+      "WHEN #{connection.quote(id)} THEN #{index + 1}"
+    end.join(" ")
+
+    # Execute single UPDATE
+    sql = sanitize_sql_array([
+                               "UPDATE tasks SET position = CASE id #{case_statement} END WHERE id IN (?)",
+                               ordered_ids
+                             ])
+
+    connection.execute(sql)
   end
 
   private
