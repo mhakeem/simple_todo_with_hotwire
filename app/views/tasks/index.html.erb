@@ -22,7 +22,10 @@
       class="w-full px-4 py-2 boarder rounded"
     >
 
-    <div id="tasks" class="space-y-2" data-search-target="container">
+    <div id="tasks"
+         class="space-y-2"
+         data-controller="sortable"
+         data-search-target="container">
       <%= render @tasks %>
     </div>
   </div>

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :tasks do
     collection do
       get :stats
+      patch :reorder
     end
   end
 end

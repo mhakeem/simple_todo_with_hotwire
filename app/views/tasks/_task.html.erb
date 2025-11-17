@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "task_#{task.id}" do %>
+<%= turbo_frame_tag "task_#{task.id}", data: { task_id: task.id } do %>
   <div
     data-controller="inline-edit"
     data-search-target="task"

@@ -62,9 +62,17 @@ class TasksController < ApplicationController
     @pending = @total - @completed
   end
 
+  def reorder
+    Task.reorder_by_ids(params[:ordered_ids])
+    head :ok
+  rescue => e
+    Rails.logger.error "Reorder failed: #{e.message}"
+    head :unprocessable_entity
+  end
+
   private
 
   def task_params
-    params.require(:task).permit(:content, :completed, :description)
+    params.require(:task).permit(:content, :completed, :description, :position)
   end
 end
