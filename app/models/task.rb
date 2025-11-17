@@ -1,6 +1,8 @@
 class Task < ApplicationRecord
   validates :content, presence: true
 
+  has_rich_text :description
+
   enum :status, { todo: 0, in_progress: 1, done: 2 }
 
   default_scope { order(position: :asc) }
