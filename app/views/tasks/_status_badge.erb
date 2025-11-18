@@ -1,0 +1,30 @@
+<div data-controller="status"
+     data-status-task-id-value="<%= task.id %>"
+     data-status-current-value="<%= task.status %>"
+     data-action="click->status#cycle"
+     class="cursor-pointer select-none flex items-center gap-2">
+
+  <% if task.todo? %>
+    <span class="flex items-center gap-2 text-gray-600">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke-width="2"/>
+      </svg>
+      <span class="text-sm font-medium">Todo</span>
+    </span>
+  <% elsif task.in_progress? %>
+    <span class="flex items-center gap-2 text-blue-600">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span class="text-sm font-medium">In Progress</span>
+    </span>
+  <% else %>
+    <span class="flex items-center gap-2 text-green-600">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+      </svg>
+      <span class="text-sm font-medium">Done</span>
+    </span>
+  <% end %>
+</div>

@@ -11,14 +11,7 @@
         data-inline-edit-target="display"
         class="flex items-center gap-3 flex-1"
       >
-        <%= form_with(model: task, method: :patch) do |form| %>
-          <%= form.check_box :status,
-                             { onchange: "this.form.requestSubmit()",
-                               class: "w-5 h-5" },
-                             "done",
-                             "todo"
-          %>
-        <% end %>
+        <%= render "status_badge", task: task %>
 
         <span
           data-action="click->inline-edit#edit"
