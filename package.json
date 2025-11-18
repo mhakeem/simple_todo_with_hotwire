@@ -4,7 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build:react": "esbuild app/javascript/react_app.js --bundle --sourcemap --format=esm --outfile=app/assets/builds/react_app.js --public-path=/assets --loader:.js=jsx --loader:.jsx=jsx"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.20",
+    "@rails/actiontext": "^8.1.100",
+    "esbuild": "^0.27.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sortablejs": "^1.15.6",
+    "trix": "^2.1.15"
+  }
 }
