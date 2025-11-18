@@ -7,6 +7,14 @@
     </div>
   <% end %>
 
+  <div id="task-counter">
+    <%= render "task_filter",
+               total: @tasks.count,
+               todo: @tasks.todo.count,
+               in_progress: @tasks.in_progress.count,
+               done: @tasks.done.count %>
+  </div>
+
   <%= turbo_frame_tag "task_form" do %>
     <%= render "form", task: @task %>
   <% end %>

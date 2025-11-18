@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
     @task = Task.new
+
   end
 
   def new
@@ -55,11 +56,13 @@ class TasksController < ApplicationController
   end
 
   def stats
-    sleep 2  # Simulate slow query
+    sleep 1 # Simulate slow query
 
-    @total = Task.count
-    @completed = Task.done.count
-    @pending = Task.todo.count + Task.in_progress.count
+    @tasks = Task.all
+    @todo = @tasks.todo.count
+    @in_progress = @tasks.in_progress.count
+    @done = @tasks.done.count
+    @total = @tasks.count
   end
 
   def reorder

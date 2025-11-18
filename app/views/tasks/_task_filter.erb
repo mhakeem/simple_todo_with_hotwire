@@ -1,0 +1,23 @@
+<div data-controller="task-filter"
+     class="bg-white rounded-lg shadow p-6 mb-6">
+
+  <div class="flex gap-2">
+    <button data-action="click->task-filter#showAll"
+            data-task-filter-target="allButton"
+            class="px-4 py-2 bg-blue-500 text-white rounded">
+      All Tasks
+    </button>
+
+    <button data-action="click->task-filter#showActive"
+            data-task-filter-target="activeButton"
+            class="px-4 py-2 bg-gray-200 rounded">
+      Active Only
+    </button>
+
+    <button data-action="click->task-filter#showCompleted"
+            data-task-filter-target="completedButton"
+            class="px-4 py-2 bg-gray-200 rounded">
+      Completed Only
+    </button>
+  </div>
+</div>

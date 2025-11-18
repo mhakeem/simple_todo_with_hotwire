@@ -1,1 +1,9 @@
 <%= turbo_stream.remove "task_#{@task.id}" %>
+
+<%= turbo_stream.replace "task-counter" do %>
+  <%= render "task_filter",
+             total: Task.count,
+             todo: Task.todo.count,
+             in_progress: Task.in_progress.count,
+             done: Task.done.count %>
+<% end %>

@@ -1,5 +1,13 @@
 <%= turbo_stream.prepend "tasks", partial: "task", locals: { task: @task } %>
-
 <%= turbo_stream.replace "task_form", partial: "form", locals: { task: Task.new } %>
+<%= turbo_stream.prepend "flash-messages", partial: "shared/flash_message",
+                         locals: { message: "Task created successfully!" } %>
 
-<%= turbo_stream.prepend "flash-messages", partial: 'shared/flash' %>
+<!-- NEW: Update counter -->
+<%= turbo_stream.replace "task-counter" do %>
+  <%= render "task_filter",
+             total: Task.count,
+             todo: Task.todo.count,
+             in_progress: Task.in_progress.count,
+             done: Task.done.count %>
+<% end %>
