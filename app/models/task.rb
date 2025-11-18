@@ -29,6 +29,10 @@ class Task < ApplicationRecord
     connection.execute(sql)
   end
 
+  def description_plain_text
+    description.to_plain_text if description.present?
+  end
+
   private
 
   def set_position

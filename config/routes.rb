@@ -11,10 +11,24 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "tasks#index"
+
+  get "tasks/react", to: "tasks#react"
+
   resources :tasks do
     collection do
       get :stats
       patch :reorder
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      resources :tasks do
+        collection do
+          get :stats
+        end
+      end
+    end
+  end
+
 end

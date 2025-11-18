@@ -73,6 +73,10 @@ class TasksController < ApplicationController
     head :unprocessable_entity
   end
 
+  def react
+    render layout: false
+  end
+
   private
 
   def task_params
