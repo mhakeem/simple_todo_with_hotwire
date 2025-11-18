@@ -5,12 +5,16 @@
       <div class="text-sm text-gray-600">Total Tasks</div>
     </div>
     <div>
-      <div class="text-2xl font-bold text-green-600"><%= @completed %></div>
-      <div class="text-sm text-gray-600">Completed</div>
+      <div class="text-2xl font-bold text-green-600"><%= @done %></div>
+      <div class="text-sm text-gray-600">Done</div>
     </div>
     <div>
-      <div class="text-2xl font-bold text-orange-600"><%= @pending %></div>
-      <div class="text-sm text-gray-600">Pending</div>
+      <div class="text-2xl font-bold text-orange-600"><%= @in_progress %></div>
+      <div class="text-sm text-gray-600">In Progress</div>
+    </div>
+    <div>
+      <div class="text-2xl font-bold text-gray-600"><%= @todo %></div>
+      <div class="text-sm text-gray-600">To Do</div>
     </div>
   </div>
 <% end %>
