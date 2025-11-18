@@ -6,19 +6,12 @@ export default class extends Controller {
         current: String
     }
 
-    connect() {
-        console.log("Status controller connected")
-        console.log("Current status:", this.currentValue)
-    }
-
     cycle(event) {
         event.preventDefault()
 
-        // Determine next status
         const nextStatus = this.getNextStatus(this.currentValue)
         console.log(`Cycling from ${this.currentValue} to ${nextStatus}`)
 
-        // Update status
         this.updateStatus(nextStatus)
     }
 
@@ -37,7 +30,8 @@ export default class extends Controller {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content,
+                    'Accept': 'text/vnd.turbo-stream.html'
                 },
                 body: JSON.stringify({task: {status: newStatus}})
             })
@@ -46,9 +40,15 @@ export default class extends Controller {
                 throw new Error('Failed to update status')
             }
 
+            // Get the Turbo Stream response
+            const turboStreamHTML = await response.text()
+
+            // Render it with Turbo
+            Turbo.renderStreamMessage(turboStreamHTML)
+
             console.log('✅ Status updated successfully')
 
-            // Update the current value so next click works
+            // Update current value for next cycle
             this.currentValue = newStatus
 
         } catch (error) {
